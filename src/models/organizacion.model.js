@@ -13,4 +13,4 @@ const organizacionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Organizacion', organizacionSchema);
+export default mongoose.model('Organizaciones', organizacionSchema);

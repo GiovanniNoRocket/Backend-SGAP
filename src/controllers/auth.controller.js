@@ -34,6 +34,10 @@ const crearUsuarioRectoria = async (req, res) => {
       return res.status(400).json({ message: 'Faltan campos obligatorios del usuario' });
     }
 
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Las contraseñas no coinciden' });
+    }
+
     if (!nombreOrg || !nit || !razonSocial || !emailOrg || !direccion) {
       return res.status(400).json({ message: 'Faltan campos obligatorios de la organización' });
     }

@@ -5,7 +5,7 @@ const verificarJWT = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ mensaje: 'Token no proporcionado' });
+    return res.status(401).json({ message: 'Token no proporcionado' });
   }
 
   const token = authHeader.split(' ')[1];
@@ -15,13 +15,13 @@ const verificarJWT = async (req, res, next) => {
     const usuario = await Usuario.findById(decoded.id);
 
     if (!usuario) {
-      return res.status(401).json({ mensaje: 'Usuario no válido' });
+      return res.status(401).json({ message: 'Usuario no válido' });
     }
 
     req.usuario = usuario;
     next();
   } catch (error) {
-    res.status(401).json({ mensaje: 'Token inválido o expirado' });
+    res.status(401).json({ message: 'Token inválido o expirado' });
   }
 };
 

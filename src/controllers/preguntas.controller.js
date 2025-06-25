@@ -7,7 +7,7 @@ const crearPregunta = async (req, res) => {
     await nuevaPregunta.save();
     res.status(201).json(nuevaPregunta);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al crear pregunta', error });
+    res.status(400).json({ message: 'Error al crear pregunta', error });
   }
 };
 
@@ -16,17 +16,17 @@ const obtenerPreguntas = async (req, res) => {
     const preguntas = await Pregunta.find();
     res.json(preguntas);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener preguntas', error });
+    res.status(500).json({ message: 'Error al obtener preguntas', error });
   }
 };
 
 const obtenerPreguntaPorId = async (req, res) => {
   try {
     const pregunta = await Pregunta.findById(req.params.id);
-    if (!pregunta) return res.status(404).json({ mensaje: 'Pregunta no encontrada' });
+    if (!pregunta) return res.status(404).json({ message: 'Pregunta no encontrada' });
     res.json(pregunta);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al buscar pregunta', error });
+    res.status(500).json({ message: 'Error al buscar pregunta', error });
   }
 };
 
@@ -41,10 +41,10 @@ const actualizarPregunta = async (req, res) => {
     const pregunta = await Pregunta.findByIdAndUpdate(req.params.id, actualizaciones, {
       new: true,
     });
-    if (!pregunta) return res.status(404).json({ mensaje: 'Pregunta no encontrada' });
+    if (!pregunta) return res.status(404).json({ message: 'Pregunta no encontrada' });
     res.json(pregunta);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al actualizar pregunta', error });
+    res.status(400).json({ message: 'Error al actualizar pregunta', error });
   }
 };
 

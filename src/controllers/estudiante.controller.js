@@ -14,7 +14,7 @@ const crearEstudiante = async (req, res) => {
     await nuevoEstudiante.save();
     res.status(201).json(nuevoEstudiante);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al crear estudiante', error });
+    res.status(400).json({ message: 'Error al crear estudiante', error });
   }
 };
 
@@ -23,17 +23,17 @@ const obtenerEstudiantes = async (req, res) => {
     const estudiantes = await Estudiante.find().populate('usuario organizacion');
     res.json(estudiantes);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener estudiantes', error });
+    res.status(500).json({ message: 'Error al obtener estudiantes', error });
   }
 };
 
 const obtenerEstudiantePorId = async (req, res) => {
   try {
     const estudiante = await Estudiante.findById(req.params.id).populate('usuario organizacion');
-    if (!estudiante) return res.status(404).json({ mensaje: 'Estudiante no encontrado' });
+    if (!estudiante) return res.status(404).json({ message: 'Estudiante no encontrado' });
     res.json(estudiante);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al buscar estudiante', error });
+    res.status(500).json({ message: 'Error al buscar estudiante', error });
   }
 };
 
@@ -51,10 +51,10 @@ const actualizarEstudiante = async (req, res) => {
     const estudiante = await Estudiante.findByIdAndUpdate(req.params.id, actualizaciones, {
       new: true,
     });
-    if (!estudiante) return res.status(404).json({ mensaje: 'Estudiante no encontrado' });
+    if (!estudiante) return res.status(404).json({ message: 'Estudiante no encontrado' });
     res.json(estudiante);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al actualizar estudiante', error });
+    res.status(400).json({ message: 'Error al actualizar estudiante', error });
   }
 };
 

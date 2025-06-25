@@ -16,7 +16,7 @@ const crearOrganizacion = async (req, res) => {
     await nuevaOrg.save();
     res.status(201).json(nuevaOrg);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al crear organización', error });
+    res.status(400).json({ message: 'Error al crear organización', error });
   }
 };
 
@@ -25,17 +25,17 @@ const obtenerOrganizaciones = async (req, res) => {
     const organizaciones = await Organizacion.find();
     res.json(organizaciones);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener organizaciones', error });
+    res.status(500).json({ message: 'Error al obtener organizaciones', error });
   }
 };
 
 const obtenerOrganizacionPorId = async (req, res) => {
   try {
     const organizacion = await Organizacion.findById(req.params.id);
-    if (!organizacion) return res.status(404).json({ mensaje: 'Organización no encontrada' });
+    if (!organizacion) return res.status(404).json({ message: 'Organización no encontrada' });
     res.json(organizacion);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al buscar organización', error });
+    res.status(500).json({ message: 'Error al buscar organización', error });
   }
 };
 
@@ -53,10 +53,10 @@ const actualizarOrganizacion = async (req, res) => {
     const organizacion = await Organizacion.findByIdAndUpdate(req.params.id, actualizaciones, {
       new: true,
     });
-    if (!organizacion) return res.status(404).json({ mensaje: 'Organización no encontrada' });
+    if (!organizacion) return res.status(404).json({ message: 'Organización no encontrada' });
     res.json(organizacion);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al actualizar organización', error });
+    res.status(400).json({ message: 'Error al actualizar organización', error });
   }
 };
 

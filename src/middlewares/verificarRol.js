@@ -2,7 +2,7 @@ const verificarRol = function (...rolesPermitidos) {
   return (req, res, next) => {
     const usuario = req.usuario;
     if (!usuario || !rolesPermitidos.includes(usuario.rol)) {
-      return res.status(403).json({ mensaje: 'No tienes permiso para acceder a este recurso' });
+      return res.status(403).json({ message: 'No tienes permiso para acceder a este recurso' });
     }
 
     if (
@@ -13,7 +13,7 @@ const verificarRol = function (...rolesPermitidos) {
     ) {
       return res
         .status(403)
-        .json({ mensaje: 'Ya perteneces a una organización, no puedes crear otra' });
+        .json({ message: 'Ya perteneces a una organización, no puedes crear otra' });
     }
 
     next();

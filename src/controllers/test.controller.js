@@ -7,7 +7,7 @@ const crearTest = async (req, res) => {
     await nuevoTest.save();
     res.status(201).json(nuevoTest);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al crear test', error });
+    res.status(400).json({ message: 'Error al crear test', error });
   }
 };
 
@@ -16,17 +16,17 @@ const obtenerTests = async (req, res) => {
     const tests = await Test.find().populate('preguntas creadoPor organizacion');
     res.json(tests);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener tests', error });
+    res.status(500).json({ message: 'Error al obtener tests', error });
   }
 };
 
 const obtenerTestPorId = async (req, res) => {
   try {
     const test = await Test.findById(req.params.id).populate('preguntas');
-    if (!test) return res.status(404).json({ mensaje: 'Test no encontrado' });
+    if (!test) return res.status(404).json({ message: 'Test no encontrado' });
     res.json(test);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al buscar test', error });
+    res.status(500).json({ message: 'Error al buscar test', error });
   }
 };
 
@@ -39,10 +39,10 @@ const actualizarTest = async (req, res) => {
     }
 
     const test = await Test.findByIdAndUpdate(req.params.id, actualizaciones, { new: true });
-    if (!test) return res.status(404).json({ mensaje: 'Test no encontrado' });
+    if (!test) return res.status(404).json({ message: 'Test no encontrado' });
     res.json(test);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al actualizar test', error });
+    res.status(400).json({ message: 'Error al actualizar test', error });
   }
 };
 

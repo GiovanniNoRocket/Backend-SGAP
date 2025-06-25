@@ -6,12 +6,12 @@ const crearUsuario = async (req, res) => {
       req.body;
 
     if (!email || !password || !nombres || !apellidos || !identificacion?.id || !identificacion?.tipo || !telefono || !rol || !organizacion) {
-      return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
+      return res.status(400).json({ message: 'Faltan campos obligatorios' });
     }
 
     const usuarioExistente = await Usuario.findOne({ email });
     if (usuarioExistente) {
-      return res.status(409).json({ mensaje: 'El correo ya está registrado' });
+      return res.status(409).json({ message: 'El correo ya está registrado' });
     }
 
     const nuevoUsuario = new Usuario({
@@ -27,7 +27,7 @@ const crearUsuario = async (req, res) => {
 
     await nuevoUsuario.save();
     res.status(201).json({
-      mensaje: 'Usuario creado correctamente',
+      message: 'Usuario creado correctamente',
       usuario: {
         id: nuevoUsuario._id,
         email: nuevoUsuario.email,
@@ -38,7 +38,7 @@ const crearUsuario = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al crear usuario', error });
+    res.status(400).json({ message: 'Error al crear usuario', error });
   }
 };
 
@@ -47,23 +47,23 @@ const obtenerUsuarios = async (req, res) => {
     const usuarios = await Usuario.find();
     res.json(usuarios);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener usuarios', error });
+    res.status(500).json({ message: 'Error al obtener usuarios', error });
   }
 };
 
 const obtenerUsuarioPorId = async (req, res) => {
   try {
     const usuario = await Usuario.findById(req.params.id);
-    if (!usuario) return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    if (!usuario) return res.status(404).json({ message: 'Usuario no encontrado' });
     res.json(usuario);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al buscar usuario', error });
+    res.status(500).json({ message: 'Error al buscar usuario', error });
   }
 };
 
 const actualizarUsuario = async (req, res) => {
   try {
-    const camposPermitidos = ['password', 'rol', 'identificacion', 'telefono', 'rol'];
+    const camposPermitidos = ['password', 'email', 'rol', 'identificacion', 'telefono'];
     const actualizaciones = {};
 
     for (let campo of camposPermitidos) {
@@ -73,10 +73,10 @@ const actualizarUsuario = async (req, res) => {
     }
 
     const usuario = await Usuario.findByIdAndUpdate(req.params.id, actualizaciones, { new: true });
-    if (!usuario) return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    if (!usuario) return res.status(404).json({ message: 'Usuario no encontrado' });
     res.json(usuario);
   } catch (error) {
-    res.status(400).json({ mensaje: 'Error al actualizar usuario', error });
+    res.status(400).json({ message: 'Error al actualizar usuario', error });
   }
 };
 

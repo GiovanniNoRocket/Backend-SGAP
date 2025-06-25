@@ -6,7 +6,7 @@ const organizacionSchema = new mongoose.Schema(
     nombre: { type: String, required: true },
     nombreContacto: { type: String },
     razonSocial: { type: String },
-    email: { type: String },
+    email: { type: String, unique: true },
     urlWeb: { type: String },
     direccion: {type: String, required: true},
   },

@@ -4,15 +4,38 @@ import jwt from 'jsonwebtoken';
 
 const crearUsuarioRectoria = async (req, res) => {
   try {
-  
-    const { nombreRector, apellido, tipoId, numeroId,emailRector,password, telefono, nombreOrg, nit, razonSocial, emailOrg , urlOrg,direccion } = req.body;
+    const {
+      nombreRector,
+      apellido,
+      tipoId,
+      numeroId,
+      emailRector,
+      password,
+      confirmPassword,
+      telefono,
+      nombreOrg,
+      nit,
+      razonSocial,
+      emailOrg,
+      urlOrg,
+      direccion,
+    } = req.body;
 
-    if (!emailRector || !password || !nombreRector || !apellido || !tipoId || !numeroId || !telefono) {
-      return res.status(400).json({ mensaje: 'Faltan campos obligatorios del usuario' });
+    if (
+      !emailRector ||
+      !password ||
+      !confirmPassword ||
+      !nombreRector ||
+      !apellido ||
+      !tipoId ||
+      !numeroId ||
+      !telefono
+    ) {
+      return res.status(400).json({ message: 'Faltan campos obligatorios del usuario' });
     }
 
     if (!nombreOrg || !nit || !razonSocial || !emailOrg || !direccion) {
-      return res.status(400).json({ mensaje: 'Faltan campos obligatorios de la organización' });
+      return res.status(400).json({ message: 'Faltan campos obligatorios de la organización' });
     }
 
     let organizacionExistente = await Organizacion.findOne({ nit });
@@ -23,7 +46,7 @@ const crearUsuarioRectoria = async (req, res) => {
         razonSocial,
         email: emailOrg,
         url: urlOrg,
-        direccion
+        direccion,
       });
       await organizacionExistente.save();
     }
@@ -57,11 +80,9 @@ const crearUsuarioRectoria = async (req, res) => {
         nit: organizacionExistente.nit,
       },
     });
-
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error al crear usuario o organización:', error);
-    res.status(400).json({ mensaje: 'Error al crear usuario o organizacion', error });
+    res.status(400).json({ message: 'Error al crear usuario o organizacion', error });
   }
 };
 
@@ -69,14 +90,14 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const usuario = await Usuario.findOne({ email });
 
-  if (!usuario) return res.status(401).json({ mensaje: 'Usuario no encontrado' });
+  if (!usuario) return res.status(401).json({ message: 'Usuario no encontrado' });
 
   const esValido = await usuario.validarPassword(password);
-  if (!esValido) return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
+  if (!esValido) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
   const token = jwt.sign(
     { id: usuario._id, rol: usuario.rol },
-    process.env.JWT_SECRET || 'secreto', 
+    process.env.JWT_SECRET || 'secreto',
     { expiresIn: '1d' }
   );
 
